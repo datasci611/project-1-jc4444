@@ -1,0 +1,241 @@
+---
+title: "Project 1 611"
+author: "Jie Chen"
+date: "2018/9/24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+To see a list of all the data sets that are available in my R distribution, I type in `data()` in R console.
+
+```{r}
+data()
+```
+
+##Dataset1 **Orange**
+
+
+ After checking out the list of all the datasets in r, I decided to analysis the dataset named Orange. To find out more information about this dataset, I use `?Orange`.
+ 
+```{r}
+?Orange
+```
+ 
+It says that it includes:
+
+>The Orange data frame has 35 rows and 3 columns of records of the growth of orange trees.
+
+The entire data set is made up of:
+
+>35 rows and 3 columns
+
+And the original source for the data is:
+
+>This dataset was originally part of package nlme, and that has methods (including for [, as.data.frame, plot and print) for its grouped-data classes.
+
+###Read data into R
+```{r,eval = FALSE}
+ library(tidyverse)
+ data(Orange)
+```
+
+
+###Get an idea of what the data looks like
+```{r}
+ head(Orange,10)
+ summary(Orange)
+```
+
+###Produce a figure
+```{r}
+library(ggplot2)
+ggplot(data = Orange) +
+  geom_point(mapping = aes(x = age, y = circumference, color = Tree))+
+  geom_smooth(mapping = aes(x = age, y = circumference))
+```
+
+```{r}
+library(dplyr)
+Orange %>%
+  group_by(Tree) %>%
+  summarise(average=mean(circumference))
+Orange %>%
+  group_by(age) %>%
+  summarise(average=mean(circumference))
+
+```
+
+###Communicate results
+
+
+>This figure was derived from the “Orange” data set in R. This dataset was originally part of package nlme. It has 35 rows and 3 columns of records of the growth of orange trees. The data are measured on 5 trees at age 118, 484,664,1004,1231,1372,1582, 7 time points. The average circumference is 115.2. The circumference is “circumference at breast height”, a standard measurement in forestry. The circumference increases with the age for every Tree. The tree that has the largest average circumference is Tree 3 and the tree that has the smallest average circumference is Tree 4. The average circumference at age 118 is 31.0 and the average circumference at age 1582 is 175.8.
+
+>At a next step, it will be interesting to look at whether the increase in circumference is linear with the age.
+
+
+
+##Dataset2 **USArrests**
+ I chose USArrests as my second dataset. To find out more information about this dataset, I use `?USArrests`.
+```{r}
+ ?USArrests
+```
+
+It says that it includes:
+
+> This data set contains statistics, in arrests per 100,000 residents for assault, murder, and rape in each of the 50 US states in 1973. Also given is the percent of the population living in urban areas.
+
+The entire data set is made up of:
+
+> 50 observations on 4 variables
+
+And the original source for the data is:
+
+>This dataset was derived from World Almanac and Book of facts 1975(Crime rates) and Statistical Abstracts of the United States 1975(Urban rates).
+
+###Read data into R
+```{r}
+data(USArrests)
+```
+
+###Get an idea of what the data looks like
+
+
+```{r}
+ head(USArrests,10)
+ summary(USArrests)
+```
+
+
+###Produce a figure
+```{r}
+ggplot(data = USArrests)+
+  geom_point(mapping = aes(x = UrbanPop, y = Murder),color="blue")+
+  geom_point(mapping = aes(x = UrbanPop, y = Assault),color="red")+
+  geom_point(mapping = aes(x = UrbanPop, y = Rape),color="yellow")
+```
+
+
+
+###Communicate results
+
+>This figure was derived from the “USArrests” data set in R. This dataset was derived from World Almanac and Book of facts 1975(Crime rates) and Statistical Abstracts of the United States 1975(Urban rates). It contains statistics, in arrests per 100,000 residents for assault, murder, and rape in each of the 50 US states in 1973. Also given is the percent of the population living in urban areas. The Murder and Rape arrest rate are much lower than the Assault arrest rate. The rape and murder arrest rate seems to increase with the UrbanPopultation percentage. However there are no obvious pattern in the assault arrest rate.
+
+>At a next step, it will be interesting to look at whether the Murder Assualt and Rape rate has any patterns geographically.
+
+##Dataset3 **sleep**
+
+ I chose sleep as my third dataset. To find out more information about this dataset, I use `?sleep`.
+```{r}
+ ?sleep
+```
+
+It says that it includes:
+
+> This data set shows the effect of two soporific drugs (increase in hours of sleep compared to control) on 10 patients.
+
+The entire data set is made up of:
+
+> 20 observations on 3 variables
+
+And the original source for the data is:
+
+>This dataset was derived from The action of optical isomers: II hyoscines and The probable error of the mean.
+
+###Read data into R
+```{r}
+data(sleep)
+```
+
+###Get an idea of what the data looks like
+
+```{r}
+ head(sleep,10)
+ summary(sleep)
+```
+
+
+###Produce a figure
+```{r}
+ggplot(data=sleep) +
+geom_boxplot(mapping = aes(y = extra, x = group))
+```
+
+
+```{r}
+sleep %>%
+  group_by(group) %>%
+  summarise(average=mean(extra))
+```
+###Communicate results
+
+>This figure was derived from the “sleep” data set in R. This dataset was derived from The action of optical isomers: II hyoscines and The probable error of the mean.It shows the effect of two soporific drugs (increase in hours of sleep compared to control) on 10 patients. The data are measured on 10 patients, each of the patients are given two soporific drugs. The effect is defined as the numeric increase in hours of sleep. It is the extra variable in our dataset. We can see the average sleep increase hours of group1 is 0.75 hours compared to that of group2 is 2.33 hours. From the boxplot, we can see the average sleep increase hours are not quite normally distributed, it has heavy right tail. That means some of our subjects experience a very large number of increase in sleep. In conclusion, both of them seem to help with sleeping and the drug 2 seems to work much better that the drug1.
+
+>At a next step, it will be interesting to carry out hypothesis testing of whether these two drugs have effect on sleep hours and whether the drug 2 works significantly better than the drug1.
+
+
+
+
+##Dataset4 **ChickWeight**
+
+I chose ChickWeight as my third dataset. To find out more information about this dataset, I use `?ChickWeight`.
+```{r}
+ ?ChickWeight
+```
+
+It says that it includes:
+
+> The ChickWeight data frame has 578 rows and 4 columns from an experiment on the effect of diet on early growth of chicks.
+
+The entire data set is made up of:
+
+> 578 rows and 4 columns
+
+And the original source for the data is:
+
+>This dataset was originally part of package nlme, and that has methods (including for [, as.data.frame, plot and print) for its grouped-data classes.
+
+###Read data into R
+```{r}
+data(ChickWeight)
+```
+
+###Get an idea of what the data looks like
+
+```{r}
+ head(ChickWeight,10)
+ summary(ChickWeight)
+```
+
+
+###Produce a figure
+```{r}
+ChickWeight %>%
+  group_by(Time,Diet) %>%
+  summarise(average=mean(weight)) %>%
+  ggplot() +
+  geom_point(mapping=aes(x=Time,y=average,color=Diet))
+```
+
+```{r}
+ChickWeight %>%
+  group_by(Time) %>%
+  summarise(average=mean(weight))
+
+ChickWeight %>%
+  group_by(Chick) %>%
+  summarise(average=mean(weight))
+```
+###Communicate results
+
+
+>This figure was derived from the “ChickWeight” data set in R. This dataset was originally part of package nlme. It has has 578 rows and 4 columns from an experiment on the effect of diet on early growth of chicks. The data are measured on 23 chickens at time 0,2,4,6,8,10,12,14,16,18,20,21(12 time points). The average chicken weight is 121.8. We can see from the graph that the chickens are well randomized to diet 1, 2, 3, 4, because the four groups almost has the same average chickenweight at time 0.  The weight of chicken increases with the Time. We can see chicken 18 has the smallest average weight over the time with value of 37.00 and chicken 35 has the largest average weight over the time with the value 193.17. From the graph we can see that diet 3 seems to works best in increasing the chicken weight and diet 1 seems to work the worst in term of the average weight over time.
+
+>At a next step, it will be interesting to check if there is any loss of follow-up of the chicken weight in our dataset. And we can also perform a hypothesis test to see whether diet 3 works best in increasing chicken weight.
+
+
+
+
+
